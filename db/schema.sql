@@ -7,7 +7,7 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL UNIQUE,
     user_type INT NOT NULL, /* 0 = User, 1 = Content Creator, 2 = Admin */
     password_hash CHAR(64) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 /* Genre Table */
@@ -15,7 +15,8 @@ CREATE TABLE users (
 CREATE TABLE genre (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description TEXT
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 /* Movies Table */
@@ -26,5 +27,5 @@ CREATE TABLE movies (
     description TEXT,
     release_date DATE,
     genre INT REFERENCES genre(id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
