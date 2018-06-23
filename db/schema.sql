@@ -9,3 +9,13 @@ CREATE TABLE users (
     password_hash CHAR(64) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+/* Movies Table */
+
+CREATE TABLE movies (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    release_date DATETIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
