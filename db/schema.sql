@@ -10,12 +10,21 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+/* Genre Table */
+
+CREATE TABLE genre (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT
+);
+
 /* Movies Table */
 
 CREATE TABLE movies (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT,
-    release_date DATETIME,
+    release_date DATE,
+    genre INT REFERENCES genre(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
