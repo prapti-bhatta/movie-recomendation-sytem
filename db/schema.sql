@@ -29,3 +29,14 @@ CREATE TABLE movies (
     genre INT REFERENCES genre(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+
+/* Movie Review Table */
+
+CREATE TABLE movie_reviews (
+    id SERIAL PRIMARY KEY,
+    comment TEXT,
+    rating INT,
+    user_id INT REFERENCES users(id),
+    movie_id INT REFERENCES movies(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+)
