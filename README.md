@@ -1,7 +1,7 @@
 # Movie Recommendation System
 
 **Setup Instructions**
-This repository is yet to be setup
+- Set the password for PostgreSQL root user to 'password'
 
 **Tools**
 1. Python v2.7.1
