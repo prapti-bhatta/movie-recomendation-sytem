@@ -1,3 +1,5 @@
+import { getSession } from './session'
+
 const API_ROOT = 'http://127.0.0.1:8000/api/'
 
 export default function fetch (url, options) {
@@ -26,4 +28,19 @@ export function combineErrors (e) {
     delete result.non_field_errors
   }
   return result
+}
+
+export function authenticatedFetch (url, options = {}) {
+  const token = getSession().token
+  if (!token) return Promise.reject(new Error('You need to be logged in to perform this request'))
+
+  const headers = new window.Headers()
+  headers.set('Authorization', `Token ${token}`)
+
+  return fetch(url, {
+    ...options,
+    headers: {
+      'Authorization': `Token ${token}`
+    }
+  })
 }
