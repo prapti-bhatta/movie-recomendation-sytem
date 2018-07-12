@@ -1,5 +1,5 @@
-from .models import Movies
 from rest_framework import viewsets
+from .models import Movies
 from .serializers import MovieSerializer
 
 
