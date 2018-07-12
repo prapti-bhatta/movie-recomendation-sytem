@@ -1,0 +1,21 @@
+.NavBar {
+    background-color: rgb(139, 80, 80);
+    color: #FFFFFF;
+    padding: 15px 0;
+}
+
+.NavBar-nav {
+    list-style: none;
+    margin-bottom: 0;
+    text-align: right;
+}
+
+.NavBar-nav > li {
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.NavBar-nav > li > a {
+    text-decoration: none;
+    color: #FFFFFF;
+}

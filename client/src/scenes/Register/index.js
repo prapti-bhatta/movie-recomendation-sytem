@@ -1,31 +1,121 @@
 import React, { Component } from 'react'
 import PageTitle from '../../components/PageTitle'
+import { register } from '../../service/authentication'
+
+const EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 class Register extends Component {
+
+  constructor () {
+    super(...arguments)
+    this.state = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      errors: {},
+      registerDone: false
+    }
+
+    this.handleRegisterClick = this.handleRegisterClick.bind(this)
+    this.handleFieldChanged = this.handleFieldChanged.bind(this)
+  }
+
   handleRegisterClick (e) {
     e.preventDefault()
+
+    const errors = {}
+
+    if (!this.state.firstName || !this.state.lastName) {
+      errors.name = 'Please enter your name'
+    }
+
+    if (!this.state.email) {
+      errors.email = 'Please enter your email'
+    } else if (!EMAIL_REGEXP.test(this.state.email)) {
+      errors.email = 'Please enter a valid email address'
+    }
+
+    if (!this.state.password) {
+      errors.password = 'Please choose a password'
+    } else if (this.state.password.length < 6) {
+      errors.password = 'Your password should be atleast 6 characters long'
+    } else if (this.state.password !== this.state.confirmPassword) {
+      errors.password = 'The two passwords do not match'
+    }
+
+    if (Object.keys(errors).length === 0) {
+      register(
+        this.state.firstName,
+        this.state.lastName,
+        this.state.email,
+        this.state.password
+      )
+    } else {
+      this.setState({ errors })
+    }
+  }
+
+  handleFieldChanged (e) {
+    this.setState({ [e.target.name]: e.target.value })
   }
 
   render () {
+    const { errors } = this.state
     return (
       <div>
         <PageTitle> Register </PageTitle>
-        <form>
-          <div>
+        <form className='container'>
+          <div className='form-group'>
             <label>
               Name
-              <input name='firstName' placeholder='First' />
-              <input name='lastName' placeholder='Last' />
             </label>
+            <div className='row'>
+              <div className='col'>
+                <input name='firstName' className='form-control' placeholder='First Name' onChange={this.handleFieldChanged} />
+              </div>
+              <div className='col'>
+                <input name='lastName' className='form-control' placeholder='Last Name' onChange={this.handleFieldChanged} />
+              </div>
+            </div>
+            <div> <small> {errors.name} </small> </div>
           </div>
-          <div>
+          <div className='form-group'>
             <label>
               Email
-              <input name='email' placeholder='johndoe@gmail.com' />
             </label>
+            <input name='email' className='form-control' placeholder='johndoe@gmail.com' onChange={this.handleFieldChanged} />
+            <div> <small> {errors.email} </small> </div>
+          </div>
+          <div className='form-group'>
+            <label>
+              Password
+            </label>
+            <div className='row'>
+              <div className='col'>
+                <input
+                  className='form-control'
+                  type='password'
+                  name='password'
+                  placeholder='Password'
+                  onChange={this.handleFieldChanged}
+                />
+              </div>
+              <div className='col'>
+                <input
+                  className='form-control'
+                  type='password'
+                  name='confirmPassword'
+                  placeholder='Retype Password'
+                  onChange={this.handleFieldChanged}
+                />
+              </div>
+            </div>
+            <div> <small> {errors.password} </small> </div>
           </div>
           <div>
-            <button onClick={this.handleRegisterClick} type='submit'>Register</button>
+            <button className='btn btn-primary' onClick={this.handleRegisterClick} type='submit'>Register</button>
           </div>
         </form>
       </div>
