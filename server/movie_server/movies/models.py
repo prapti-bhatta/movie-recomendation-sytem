@@ -12,7 +12,7 @@ class Genre(models.Model):
 class Movies(models.Model):
     title = models.CharField(max_length=255, null=False)
     description = models.CharField(max_length=65535)
-    release_date = models.DateTimeField()
+    release_date = models.DateField()
     genre = models.ForeignKey(Genre, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
