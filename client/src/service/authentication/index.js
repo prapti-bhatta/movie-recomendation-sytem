@@ -1,4 +1,4 @@
-import fetch from '../fetch'
+import fetch, { combineErrors } from '../fetch'
 import { setSession, clearSession } from '../session'
 
 export function login (username, password) {
@@ -8,13 +8,13 @@ export function login (username, password) {
   }).then(res => {
     if (res.status === 200) {
       return res.json()
-        .then(res => {
-          setSession(res.token)
-          return res
+        .then(body => {
+          setSession(body.token)
+          return body
         })
     } else {
       return res.json()
-        .then(() => { throw res })
+        .then((e) => { throw combineErrors(e) })
     }
   })
 }

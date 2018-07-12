@@ -11,3 +11,19 @@ export default function fetch (url, options) {
   }
   return window.fetch(API_ROOT + url, _options)
 }
+
+export function combineErrors (e) {
+  const result = {}
+  for (const key in e) {
+    let val = e[key]
+    if (Array.isArray(val)) {
+      val = val.join(',')
+    }
+    result[key] = val
+  }
+  if (result.non_field_errors) {
+    result.global = result.non_field_errors
+    delete result.non_field_errors
+  }
+  return result
+}

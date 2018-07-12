@@ -36,6 +36,10 @@ class Login extends Component {
         .then(() => {
           this.setState({ loginDone: true })
           window.location = '/home'
+        }).catch(e => {
+          this.setState({
+            errors: e
+          })
         })
     } else {
       this.setState({ errors })
@@ -58,6 +62,11 @@ class Login extends Component {
       <div>
         <PageTitle> Login </PageTitle>
         <form className='container'>
+          {this.state.errors.global &&
+            <div className='alert alert-danger' role='alert'>
+              {this.state.errors.global}
+            </div>
+          }
           <div className='form-group'>
             <label> Username </label>
             <input
