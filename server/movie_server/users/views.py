@@ -23,5 +23,5 @@ class CurrentUserView(APIView):
 
     def get(self, request, format=None):
         user = self.request.user
-        thisUser = UserSerializer(self.get_object(user.id))
-        return Response(thisUser.data)
+        this_user = UserSerializer(self.get_object(user.id))
+        return Response(this_user.data)

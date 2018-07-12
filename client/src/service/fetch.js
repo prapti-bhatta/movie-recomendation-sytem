@@ -2,7 +2,7 @@ import { getSession } from './session'
 
 const API_ROOT = 'http://127.0.0.1:8000/api/'
 
-export default function fetch (url, options) {
+export default function fetch (url, options = {}) {
   const _options = {...options}
   if (options.body) {
     const body = new window.FormData()

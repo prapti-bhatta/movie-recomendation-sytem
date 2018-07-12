@@ -14,6 +14,7 @@ class Logout extends Component {
     logout()
       .then(() => {
         this.setState({ logoutDone: true })
+        window.location = '/'
       })
   }
 

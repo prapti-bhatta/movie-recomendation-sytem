@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 import { SITE_NAME } from '../../config'
-import { isLoggedIn } from '../../service/session'
+import { isLoggedIn, getSession } from '../../service/session'
 import './style.css'
 
 class NavBar extends Component {
   loggedInMenu () {
+    const user = getSession().user
     return (
       <ul className='NavBar-nav'>
+        <li>
+          <a href='javascript:void(0)'> {user.username} </a>
+        </li>
         <li>
           <a href='/logout'> Logout </a>
         </li>
