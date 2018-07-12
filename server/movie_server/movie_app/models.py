@@ -1,14 +1,5 @@
 from django.db import models
-
-
-class User(models.Model):
-    first_name = models.CharField(max_length=255, null=False)
-    last_name = models.CharField(max_length=255, null=False)
-    email = models.EmailField(unique=True, null=False)
-    user_type = models.IntegerField(default=0)
-    password_hash = models.CharField(max_length=64, null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+from django.contrib.auth.models import User
 
 
 class Genre(models.Model):
