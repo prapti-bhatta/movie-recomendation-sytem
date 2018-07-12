@@ -35,6 +35,7 @@ class Login extends Component {
       login(this.state.username, this.state.password)
         .then(() => {
           this.setState({ loginDone: true })
+          window.location = '/home'
         })
     } else {
       this.setState({ errors })

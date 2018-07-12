@@ -1,8 +1,32 @@
 import React, { Component } from 'react'
 import { SITE_NAME } from '../../config'
+import { isLoggedIn } from '../../service/session'
 import './style.css'
 
 class NavBar extends Component {
+  loggedInMenu () {
+    return (
+      <ul className='NavBar-nav'>
+        <li>
+          <a href='/logout'> Logout </a>
+        </li>
+      </ul>
+    )
+  }
+
+  loggedOutMenu () {
+    return (
+      <ul className='NavBar-nav'>
+        <li>
+          <a href='/login'> Login </a>
+        </li>
+        <li>
+          <a href='/register'> Register </a>
+        </li>
+      </ul>
+    )
+  }
+
   render () {
     return (
       <div className='NavBar'>
@@ -12,14 +36,7 @@ class NavBar extends Component {
               {SITE_NAME}
             </div>
             <div className='offset-sm-6 col-sm-4'>
-              <ul className='NavBar-nav'>
-                <li>
-                  <a href='/login'> Login </a>
-                </li>
-                <li>
-                  <a href='/register'> Register </a>
-                </li>
-              </ul>
+              { isLoggedIn() ? this.loggedInMenu() : this.loggedOutMenu()}
             </div>
           </div>
         </div>

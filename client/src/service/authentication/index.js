@@ -1,6 +1,22 @@
+import fetch from '../fetch'
+import { setSession, clearSession } from '../session'
+
 export function login (username, password) {
-  console.log('Login Called', { username, password })
-  return Promise.resolve()
+  return fetch('auth/token', {
+    method: 'POST',
+    body: { username, password }
+  }).then(res => {
+    if (res.status === 200) {
+      return res.json()
+        .then(res => {
+          setSession(res.token)
+          return res
+        })
+    } else {
+      return res.json()
+        .then(() => { throw res })
+    }
+  })
 }
 
 export function register (firstName, lastName, email, password) {
@@ -9,6 +25,6 @@ export function register (firstName, lastName, email, password) {
 }
 
 export function logout () {
-  console.log('Logout Called')
+  clearSession()
   return Promise.resolve()
 }
