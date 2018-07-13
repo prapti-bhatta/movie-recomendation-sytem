@@ -1,4 +1,4 @@
-import fetch from '../fetch'
+import fetch, { authenticatedFetch } from '../fetch'
 import preview from './preview'
 
 export function fetchPopularMovies () {
@@ -23,4 +23,13 @@ export function searchMovies (query) {
       })
       return movies
     })
+}
+
+export function createMovie (title, releaseDate, genre, description) {
+  return authenticatedFetch('movies/', {
+    method: 'POST',
+    body: {
+      title, description, 'release_date': releaseDate, genre
+    }
+  })
 }
