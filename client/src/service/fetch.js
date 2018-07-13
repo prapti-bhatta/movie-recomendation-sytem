@@ -14,18 +14,24 @@ export default function fetch (url, options = {}) {
   return window.fetch(API_ROOT + url, _options)
 }
 
-export function combineErrors (e) {
+export function combineErrors (e, res) {
   const result = {}
-  for (const key in e) {
-    let val = e[key]
-    if (Array.isArray(val)) {
-      val = val.join(',')
+  if (res.status === 400) {
+    for (const key in e) {
+      let val = e[key]
+      if (Array.isArray(val)) {
+        val = val.join(',')
+      }
+      result[key] = val
     }
-    result[key] = val
-  }
-  if (result.non_field_errors) {
-    result.global = result.non_field_errors
-    delete result.non_field_errors
+    if (result.non_field_errors) {
+      result.global = result.non_field_errors
+      delete result.non_field_errors
+    }
+  } else if (res.status === 401) {
+    result.global = 'You must be logged in to perform that action'
+  } else {
+    result.global = 'An unknown error occured'
   }
   return result
 }

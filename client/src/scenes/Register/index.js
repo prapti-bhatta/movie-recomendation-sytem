@@ -5,7 +5,6 @@ import { register } from '../../service/authentication'
 const EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 class Register extends Component {
-
   constructor () {
     super(...arguments)
     this.state = {
@@ -51,7 +50,13 @@ class Register extends Component {
         this.state.lastName,
         this.state.email,
         this.state.password
-      )
+      ).then(() => {
+        this.setState({ registerDone: true })
+      }).catch((e) => {
+        this.setState({
+          errors: e
+        })
+      })
     } else {
       this.setState({ errors })
     }
@@ -62,11 +67,28 @@ class Register extends Component {
   }
 
   render () {
-    const { errors } = this.state
+    const { errors, registerDone } = this.state
+    if (registerDone) {
+      return (
+        <div>
+          <PageTitle> Registration Complete </PageTitle>
+          <div className='container'>
+            <p>
+              Your account has been created successfully. Please <a href='/login'>login</a> using your new account.
+            </p>
+          </div>
+        </div>
+      )
+    }
     return (
       <div>
         <PageTitle> Register </PageTitle>
         <form className='container'>
+          {errors.global &&
+          <div className='alert alert-danger' role='alert'>
+            {errors.global}
+          </div>
+          }
           <div className='form-group'>
             <label>
               Name

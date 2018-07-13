@@ -17,7 +17,7 @@ export function login (username, password) {
         })
     } else {
       return res.json()
-        .then((e) => { throw combineErrors(e) })
+        .then((e) => { throw combineErrors(e, res) })
     }
   })
 }
@@ -28,8 +28,30 @@ export function getUserData () {
 }
 
 export function register (firstName, lastName, email, password) {
-  console.log('Register Called', { firstName, lastName, email, password })
-  return Promise.resolve()
+  return fetch('users/register/', {
+    method: 'POST',
+    body: {
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
+      'password': password,
+      'username': email
+    }
+  }).then(res => {
+    if (res.status === 200) {
+      return res.json()
+        .then(tokenBody => {
+          setSession(tokenBody.token)
+          return getUserData()
+            .then((userBody) => {
+              setSessionUser(userBody)
+            })
+        })
+    } else {
+      return res.json()
+        .then((e) => { throw combineErrors(e, res) })
+    }
+  })
 }
 
 export function logout () {
