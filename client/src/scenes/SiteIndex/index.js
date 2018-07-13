@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import NavBar from '../../components/NavBar'
 import MovieList from '../../components/MovieList'
-import { fetchPopularMovies } from '../../service/movies'
+import { fetchPopularMovies, searchMovies } from '../../service/movies'
 import SearchBar from '../../components/SearchBar'
 
 class SiteIndex extends Component {
@@ -10,10 +10,16 @@ class SiteIndex extends Component {
     this.state = {
       movies: []
     }
+    this.handleSearch = this.handleSearch.bind(this)
   }
 
   componentDidMount () {
     fetchPopularMovies()
+      .then((movies) => this.setState({ movies }))
+  }
+
+  handleSearch (query) {
+    searchMovies(query)
       .then((movies) => this.setState({ movies }))
   }
 
@@ -22,13 +28,12 @@ class SiteIndex extends Component {
       <div>
         <NavBar />
         <div className='container'>
-          <SearchBar searchHandler={() => {}} />
+          <SearchBar searchHandler={this.handleSearch} />
           <div className='row'>
             <div className='col-md-9'>
               <MovieList movies={this.state.movies} />
             </div>
-            <div className='col-md-3'>
-            </div>
+            <div className='col-md-3' />
           </div>
         </div>
       </div>
