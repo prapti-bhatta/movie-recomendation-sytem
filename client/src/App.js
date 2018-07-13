@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route } from 'react-router'
+import { Switch, Route, Redirect } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import Login from './scenes/Login'
 import Register from './scenes/Register'
@@ -12,6 +12,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route path='/' exact component={SiteIndex} />
+          <Route path='/home' exact render={() => <Redirect to='/' />} />
           <Route path='/login' exact component={Login} />
           <Route path='/register' exact component={Register} />
           <Route path='/logout' exact component={Logout} />
