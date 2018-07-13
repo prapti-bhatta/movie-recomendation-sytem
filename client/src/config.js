@@ -1,1 +1,1 @@
-export const SITE_NAME = 'Movies'
+export const SITE_NAME = 'Movie Database'

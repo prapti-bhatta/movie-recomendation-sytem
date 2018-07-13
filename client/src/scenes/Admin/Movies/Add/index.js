@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PageTitle from '../../../../components/PageTitle'
 import { getAllGenre } from '../../../../service/genre'
-import { createMovie } from '../../../../service/movies'
+import { createMovie, getMovieInfo, editMovie } from '../../../../service/movies'
 
 class Add extends Component {
   constructor () {
@@ -13,7 +14,8 @@ class Add extends Component {
       releaseDate: '',
       genre: '',
       genreList: [],
-      movieSaved: false
+      movieSaved: false,
+      editId: this.props.match.params.id
     }
 
     this.handleFieldChanged = this.handleFieldChanged.bind(this)
@@ -23,6 +25,17 @@ class Add extends Component {
   componentDidMount () {
     getAllGenre()
       .then(genreList => this.setState({ genreList }))
+    if (this.state.editId) {
+      getMovieInfo(this.state.editId)
+        .then(movie => {
+          this.setState({
+            title: movie.title,
+            description: movie.description,
+            releaseDate: movie.release_date,
+            genre: movie.genre
+          })
+        })
+    }
   }
 
   handleFieldChanged (e) {
@@ -31,7 +44,7 @@ class Add extends Component {
 
   renderGenreSelect () {
     return (
-      <select className='form-control' name='genre' onChange={this.handleFieldChanged}>
+      <select className='form-control' name='genre' value={this.state.genre} onChange={this.handleFieldChanged}>
         <option> Select Genre </option>
         {this.state.genreList.map(genre => {
           return (<option value={genre.id}>{genre.name}</option>)
@@ -61,7 +74,11 @@ class Add extends Component {
     }
 
     if (Object.keys(errors).length === 0) {
-      createMovie(this.state.title, this.state.releaseDate, this.state.genre, this.state.description)
+      const promise = (this.state.editId)
+        ? editMovie(this.state.editId, this.state.title, this.state.releaseDate, this.state.genre, this.state.description)
+        : createMovie(this.state.title, this.state.releaseDate, this.state.genre, this.state.description)
+
+      promise
         .then(() => {
           this.setState({ movieSaved: true })
         }).catch(e => {
@@ -74,15 +91,32 @@ class Add extends Component {
     }
   }
 
+  renderNavigation () {
+    return (
+      <div className='container'>
+        <br />
+        <ul className='nav'>
+          <li className='nav-item'>
+            <Link to='/admin/movies'> {'<<'} Movies </Link>
+          </li>
+        </ul>
+      </div>
+    )
+  }
+
   render () {
     const { errors, movieSaved } = this.state
     if (movieSaved) {
       return (
-        <PageTitle> New Movie Saved Successfully </PageTitle>
+        <div>
+          {this.renderNavigation()}
+          <PageTitle> Movie Saved Successfully </PageTitle>
+        </div>
       )
     }
     return (
       <div>
+        {this.renderNavigation()}
         <PageTitle> Add Movie </PageTitle>
         <div className='container'>
           <form onSubmit={this.handleAddMovie}>
@@ -97,6 +131,7 @@ class Add extends Component {
                 type='text'
                 name='title'
                 className='form-control'
+                value={this.state.title}
                 onChange={this.handleFieldChanged}
               />
               <div>
@@ -110,6 +145,7 @@ class Add extends Component {
                 type='date'
                 name='releaseDate'
                 className='form-control'
+                value={this.state.releaseDate}
                 onChange={this.handleFieldChanged}
               />
               <div>
@@ -132,6 +168,7 @@ class Add extends Component {
               <textarea
                 name='description'
                 className='form-control'
+                value={this.state.description}
                 onChange={this.handleFieldChanged}
               />
               <div>

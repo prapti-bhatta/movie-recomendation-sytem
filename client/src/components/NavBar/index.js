@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
 import { SITE_NAME } from '../../config'
-import { isLoggedIn, getSession } from '../../service/session'
+import { isLoggedIn, getSessionUser, isSessionUserAnAdmin } from '../../service/session'
 import './style.css'
 
 class NavBar extends Component {
   loggedInMenu () {
-    const user = getSession().user
+    const user = getSessionUser()
+    const isSuper = isSessionUserAnAdmin()
+
     return (
       <ul className='NavBar-nav'>
+        {isSuper && <li>
+          <a href='/admin/movies/'> Manage Movies </a>
+        </li>}
         <li>
-          <a href='javascript:void(0)'> {user.username} </a>
+          <a href='javascript:void(0)'> {user.first_name} </a>
         </li>
         <li>
           <a href='/logout'> Logout </a>
@@ -37,9 +42,9 @@ class NavBar extends Component {
         <div className='container'>
           <div className='row'>
             <div className='NavBar-brand col-sm-2'>
-              {SITE_NAME}
+              <a href='/'> {SITE_NAME} </a>
             </div>
-            <div className='offset-sm-6 col-sm-4'>
+            <div className='offset-sm-2 col-sm-8'>
               { isLoggedIn() ? this.loggedInMenu() : this.loggedOutMenu()}
             </div>
           </div>

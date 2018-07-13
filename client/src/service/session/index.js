@@ -38,3 +38,12 @@ export function isLoggedIn () {
   const session = getSession()
   return !!session.token
 }
+
+export function getSessionUser () {
+  const session = getSession()
+  return session.user
+}
+
+export function isSessionUserAnAdmin () {
+  return !!getSessionUser().is_superuser
+}

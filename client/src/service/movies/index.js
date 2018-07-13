@@ -13,7 +13,12 @@ export function fetchPopularMovies () {
     })
 }
 
-export function searchMovies (query) {
+export function getMovieInfo (id) {
+  return fetch(`movies/${id}/`)
+    .then(res => res.json())
+}
+
+export function searchMovies (query = '') {
   return fetch(`movies/?search=${query}`)
     .then(res => res.json())
     .then((movies) => {
@@ -28,6 +33,15 @@ export function searchMovies (query) {
 export function createMovie (title, releaseDate, genre, description) {
   return authenticatedFetch('movies/', {
     method: 'POST',
+    body: {
+      title, description, 'release_date': releaseDate, genre
+    }
+  })
+}
+
+export function editMovie (id, title, releaseDate, genre, description) {
+  return authenticatedFetch(`movies/${id}/`, {
+    method: 'PATCH',
     body: {
       title, description, 'release_date': releaseDate, genre
     }

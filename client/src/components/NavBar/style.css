@@ -4,6 +4,11 @@
     padding: 15px 0;
 }
 
+.NavBar-brand > a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
 .NavBar-nav {
     list-style: none;
     margin-bottom: 0;
