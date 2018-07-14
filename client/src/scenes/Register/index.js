@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PageTitle from '../../components/PageTitle'
 import { register } from '../../service/authentication'
+import NavBar from '../../components/NavBar'
 
 const EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -71,6 +72,7 @@ class Register extends Component {
     if (registerDone) {
       return (
         <div>
+          <NavBar />
           <PageTitle> Registration Complete </PageTitle>
           <div className='container'>
             <p>
@@ -82,6 +84,7 @@ class Register extends Component {
     }
     return (
       <div>
+        <NavBar />
         <PageTitle> Register </PageTitle>
         <form className='container'>
           {errors.global &&

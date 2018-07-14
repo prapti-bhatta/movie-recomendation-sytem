@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import PageTitle from '../../components/PageTitle'
 import { login } from '../../service/authentication'
+import NavBar from '../../components/NavBar'
 
 class Login extends Component {
   constructor () {
@@ -60,6 +61,7 @@ class Login extends Component {
     }
     return (
       <div>
+        <NavBar />
         <PageTitle> Login </PageTitle>
         <form className='container'>
           {this.state.errors.global &&
