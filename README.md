@@ -7,6 +7,8 @@
 - `pip install -r requirements.txt`
 - `cd movie_server`
 - `python manage.py migrate`
+- `cd ../../client`
+- `npm install`
 
 **Running**
 - Run Server
