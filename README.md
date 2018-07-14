@@ -10,6 +10,9 @@
 - `cd ../../client`
 - `npm install`
 
+**Creating an admin User**
+`python manage.py createsuperuser`
+
 **Running**
 - Run Server
     - `cd server/movie_server`
