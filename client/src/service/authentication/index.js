@@ -6,7 +6,7 @@ export function login (username, password) {
     method: 'POST',
     body: { username, password }
   }).then(res => {
-    if (res.status === 200) {
+    if (res.status >= 200 && res.status < 300) {
       return res.json()
         .then(tokenBody => {
           setSession(tokenBody.token)
@@ -38,15 +38,8 @@ export function register (firstName, lastName, email, password) {
       'username': email
     }
   }).then(res => {
-    if (res.status === 200) {
+    if (res.status >= 200 && res.status < 300) {
       return res.json()
-        .then(tokenBody => {
-          setSession(tokenBody.token)
-          return getUserData()
-            .then((userBody) => {
-              setSessionUser(userBody)
-            })
-        })
     } else {
       return res.json()
         .then((e) => { throw combineErrors(e, res) })

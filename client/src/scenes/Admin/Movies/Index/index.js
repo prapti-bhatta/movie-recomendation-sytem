@@ -19,7 +19,8 @@ class Index extends Component {
     this.updateList()
   }
 
-  handleSearch () {
+  handleSearch (e) {
+    e.preventDefault()
     this.updateList()
   }
 
@@ -34,7 +35,7 @@ class Index extends Component {
 
   renderSearch () {
     return (
-      <div className='row'>
+      <form className='row' onSubmit={this.handleSearch}>
         <div className='col-3'>
           <input
             className='form-control'
@@ -49,7 +50,7 @@ class Index extends Component {
         <div className='col-4 text-right'>
           <Link to='/admin/movies/add' className='btn btn-primary'> Add Movie </Link>
         </div>
-      </div>
+      </form>
     )
   }
 
