@@ -1,7 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router'
 import Add from './Add'
-import Index from './Index'
+import Index from './MovieIndex'
 
 function Movies () {
   return (
