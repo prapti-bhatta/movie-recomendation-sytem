@@ -3,8 +3,9 @@
 **Setup Instructions**
 - Set the password for PostgreSQL root user to 'password'
 - Create a database called movie_recommendations
+- `cd server`
 - `pip install -r requirements.txt`
-- `cd server/movie_server`
+- `cd movie_server`
 - `python manage.py migrate`
 
 **Running**
