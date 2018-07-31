@@ -7,12 +7,12 @@ const DEFAULT_SESSION = {
 
 let currentSession = getSessionFromStorage()
 
-export function setSession (token, user) {
+export function setSession (token, user = {}) {
   currentSession = { ...currentSession, token, user }
   window.localStorage.setItem(SESSION_KEY, JSON.stringify(currentSession))
 }
 
-export function setSessionUser (user) {
+export function setSessionUser (user = {}) {
   currentSession = { ...currentSession, user }
   window.localStorage.setItem(SESSION_KEY, JSON.stringify(currentSession))
 }
