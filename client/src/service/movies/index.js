@@ -51,3 +51,23 @@ export function editMovie (id, title, releaseDate, genre, description) {
     }
   })
 }
+
+export function getMovieReviews (id) {
+  return fetch(`movies/reviews?movie=${id}`)
+    .then(res => res.json())
+}
+
+export function getMovieReviewByUser (movieId, userId) {
+  return fetch(`movies/reviews?movie=${movieId}&user=${userId}`)
+    .then(res => res.json())
+    .then(arr => arr[0])
+}
+
+export function postMovieReview (movieId, comment, rating) {
+  return authenticatedFetch(`movies/reviews/`, {
+    method: 'POST',
+    body: {
+      comment, rating: Number(rating), movie: movieId
+    }
+  }).then(res => res.json())
+}
