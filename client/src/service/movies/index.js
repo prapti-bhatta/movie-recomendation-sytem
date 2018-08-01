@@ -16,6 +16,10 @@ export function fetchPopularMovies () {
 export function getMovieInfo (id) {
   return fetch(`movies/${id}/`)
     .then(res => res.json())
+    .then(movie => {
+      movie.preview = preview
+      return movie
+    })
 }
 
 export function searchMovies (query = '') {
