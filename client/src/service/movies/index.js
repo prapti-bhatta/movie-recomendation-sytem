@@ -1,7 +1,7 @@
 import fetch, { authenticatedFetch } from '../fetch'
 import preview from './preview'
 
-export function fetchPopularMovies (page = 0, limit = 10) {
+export function fetchNewestMovies (page = 0, limit = 10) {
   return fetch(`movies?offset=${page}&limit=${limit}`)
     .then(res => res.json())
     .then(({results}) => {
@@ -72,8 +72,8 @@ export function postMovieReview (movieId, comment, rating) {
   }).then(res => res.json())
 }
 
-export function recommendedMovies () {
-  return authenticatedFetch('recommendations/similar-users/')
+export function recommendedMovies (page = 0, limit = 10) {
+  return authenticatedFetch(`recommendations/similar-users?offset=${page}&limit=${limit}`)
     .then(res => res.json())
-    .then(recs => recs.map(rec => ({...rec.movie})))
+    .then(recs => recs.results.map(rec => ({...rec.movie})))
 }

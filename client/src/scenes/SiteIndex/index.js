@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import NavBar from '../../components/NavBar'
 import MovieList from '../../components/MovieList'
-import { fetchPopularMovies, searchMovies, recommendedMovies } from '../../service/movies'
+import { fetchNewestMovies, searchMovies, recommendedMovies } from '../../service/movies'
 import SearchBar from '../../components/SearchBar'
 import { getSingleMovieUrl } from '../../service/urls'
-import VerticalMovieList from '../../components/VerticalMovieList'
 import { isLoggedIn } from '../../service/session'
 
 class SiteIndex extends Component {
@@ -20,7 +19,7 @@ class SiteIndex extends Component {
   }
 
   componentDidMount () {
-    fetchPopularMovies()
+    fetchNewestMovies()
       .then((movies) => this.setState({ movies }))
 
     if (this.state.loggedIn) {
@@ -34,8 +33,13 @@ class SiteIndex extends Component {
   }
 
   handleSearch (query) {
-    searchMovies(query)
-      .then((movies) => this.setState({ movies }))
+    if (!query) {
+      fetchNewestMovies()
+        .then((movies) => this.setState({ movies }))
+    } else {
+      searchMovies(query)
+        .then((movies) => this.setState({ movies }))
+    }
   }
 
   render () {
