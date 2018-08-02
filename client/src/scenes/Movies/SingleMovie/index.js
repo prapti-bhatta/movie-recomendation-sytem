@@ -71,7 +71,7 @@ class SingleMovie extends Component {
     return (
       <div>
         <NavBar />
-        {(!movie.id && !loading)
+        {(movie.id === undefined && !loading)
           ? this.renderNotFound()
           : this.renderMovieData(movie)
         }
