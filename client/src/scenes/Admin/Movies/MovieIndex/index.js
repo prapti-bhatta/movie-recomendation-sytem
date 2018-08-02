@@ -29,7 +29,7 @@ class Index extends Component {
   }
 
   updateList () {
-    searchMovies(this.state.search)
+    searchMovies(this.state.search, 0, 65535)
       .then(movies => this.setState({ movies }))
   }
 

@@ -6,7 +6,7 @@ from users.serializers import UserSerializer
 
 class MovieSerializer(serializers.ModelSerializer):
     genre_name = serializers.StringRelatedField(source='genre', read_only=True)
-    genre = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Genre.objects.all())
+    genre = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all())
 
     class Meta:
         model = Movies

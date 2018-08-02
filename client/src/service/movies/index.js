@@ -34,20 +34,20 @@ export function searchMovies (query = '', page = 0, limit = 10) {
     })
 }
 
-export function createMovie (title, releaseDate, genre, description) {
+export function createMovie (title, releaseDate, genre, description, preview) {
   return authenticatedFetch('movies/', {
     method: 'POST',
     body: {
-      title, description, 'release_date': releaseDate, genre
+      title, description, 'release_date': releaseDate, genre, preview
     }
   })
 }
 
-export function editMovie (id, title, releaseDate, genre, description) {
+export function editMovie (id, title, releaseDate, genre, description, preview) {
   return authenticatedFetch(`movies/${id}/`, {
     method: 'PATCH',
     body: {
-      title, description, 'release_date': releaseDate, genre
+      title, description, 'release_date': releaseDate, genre, preview
     }
   })
 }

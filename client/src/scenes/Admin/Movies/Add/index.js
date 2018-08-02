@@ -13,6 +13,7 @@ class Add extends Component {
       description: '',
       releaseDate: '',
       genre: '',
+      preview: '',
       genreList: [],
       movieSaved: false,
       editId: this.props.match.params.id
@@ -32,7 +33,8 @@ class Add extends Component {
             title: movie.title,
             description: movie.description,
             releaseDate: movie.release_date,
-            genre: movie.genre
+            genre: movie.genre,
+            preview: movie.preview
           })
         })
     }
@@ -117,7 +119,7 @@ class Add extends Component {
     return (
       <div>
         {this.renderNavigation()}
-        <PageTitle> Add Movie </PageTitle>
+        <PageTitle> {this.state.editId? 'Edit' : 'Add'} Movie </PageTitle>
         <div className='container'>
           <form onSubmit={this.handleAddMovie}>
             {this.state.errors.global &&
@@ -173,6 +175,20 @@ class Add extends Component {
               />
               <div>
                 {(errors.description) ? <small>{errors.description}</small> : ''}
+              </div>
+            </div>
+            
+            <div className='form-group'>
+              <label> Preview Url </label>
+              <input
+                type='text'
+                name='preview'
+                className='form-control'
+                value={this.state.preview}
+                onChange={this.handleFieldChanged}
+              />
+              <div>
+                {(errors.preview) ? <small>{errors.preview}</small> : ''}
               </div>
             </div>
 
