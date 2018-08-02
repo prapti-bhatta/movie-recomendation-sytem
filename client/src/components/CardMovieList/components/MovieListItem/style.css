@@ -1,0 +1,11 @@
+.CardMovieListItem {
+    margin-bottom: 30px;
+}
+
+.CardMovieListItem-title {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}

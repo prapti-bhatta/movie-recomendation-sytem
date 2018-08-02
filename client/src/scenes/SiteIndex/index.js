@@ -5,6 +5,7 @@ import { fetchNewestMovies, searchMovies, recommendedMovies } from '../../servic
 import SearchBar from '../../components/SearchBar'
 import { getSingleMovieUrl } from '../../service/urls'
 import { isLoggedIn } from '../../service/session'
+import CardMovieList from '../../components/CardMovieList'
 
 class SiteIndex extends Component {
   constructor () {
@@ -19,11 +20,11 @@ class SiteIndex extends Component {
   }
 
   componentDidMount () {
-    fetchNewestMovies()
+    fetchNewestMovies(0, 6)
       .then((movies) => this.setState({ movies }))
 
     if (this.state.loggedIn) {
-      recommendedMovies()
+      recommendedMovies(0, 6)
         .then(movies => this.setState({ recommendedMovies: movies }))
     }
   }
@@ -50,17 +51,16 @@ class SiteIndex extends Component {
         <div className='container'>
           <SearchBar searchHandler={this.handleSearch} />
           <div className='row mt-5'>
-            <div className={loggedIn ? 'col-md-6' : 'col-md-12'}>
-              <h3 className='text-left'>Newest Additions</h3>
-              <MovieList
+            <div className='col-md-12'>
+              <h3 className='text-left mb-3'>Newest Additions</h3>
+              <CardMovieList
                 movies={this.state.movies}
                 onMovieClick={this.gotoMovie}
               />
             </div>
-            {loggedIn && <div className='col-md-1' />}
-            {loggedIn && <div className='col-md-5'>
-              <h3 className='text-left'>Recommended For You</h3>
-              <MovieList
+            {loggedIn && <div className='col-md-12'>
+              <h3 className='text-left mb-3'>Recommended For You</h3>
+              <CardMovieList
                 movies={this.state.recommendedMovies}
                 onMovieClick={this.gotoMovie}
               />
