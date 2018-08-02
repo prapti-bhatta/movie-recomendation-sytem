@@ -27,7 +27,7 @@ export function searchMovies (query = '', page = 0, limit = 10) {
     .then(res => res.json())
     .then(({results}) => {
       results.forEach((movie) => {
-        movie.preview = preview
+        if (!movie.preview) movie.preview = preview
         movie.rating = (Math.random() * 6)
       })
       return results
@@ -70,4 +70,10 @@ export function postMovieReview (movieId, comment, rating) {
       comment, rating: Number(rating), movie: movieId
     }
   }).then(res => res.json())
+}
+
+export function recommendedMovies () {
+  return authenticatedFetch('recommendations/similar-users/')
+    .then(res => res.json())
+    .then(recs => recs.map(rec => ({...rec.movie})))
 }
