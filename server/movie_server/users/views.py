@@ -5,8 +5,8 @@ from rest_framework import permissions, viewsets
 from .serializers import UserSerializer, UserSignupSerializer
 from django.http import Http404
 from rest_framework import generics
-
-
+import subprocess
+import os
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.IsAdminUser,)
     queryset = User.objects.all()
@@ -32,3 +32,8 @@ class RegisterUserView(generics.CreateAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSignupSerializer
+
+    def post(self, request, *args, **kwargs):
+        result = super(RegisterUserView, self).post(request, *args, **kwargs)
+        out = subprocess.call(['python', '../learning/generate_recommendations.py'])
+        return result
