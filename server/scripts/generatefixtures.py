@@ -6,7 +6,6 @@ from os import listdir, path, mkdir
 from random import randrange, shuffle
 
 reviews_per_movie = 10
-reviews_per_user = 15
 num_reviews = 1000
 
 # Get all review files
@@ -26,7 +25,7 @@ shuffle(files)
 num_movies = int(num_reviews / reviews_per_movie)
 num_users = reviews_per_movie
 
-genre_list = ['Action', 'Adventure', 'Drama', 'Action', 'Sports', 'Crime', 'Thriller', 'Sci-fi', 'History', 'Documentary']
+genre_list = ['Action', 'Adventure', 'Drama', 'Sports', 'Crime', 'Thriller', 'Sci-fi', 'History', 'Documentary']
 num_genre = len(genre_list)
 
 
@@ -132,10 +131,16 @@ def review_fixtures():
         reviews_for_this_movie = randrange(0, reviews_per_movie + 1)
         start_review_index = done_reviews
 
+        user_ids = list(range(num_users))
+
         for review_count in range(reviews_for_this_movie):
             index = start_review_index + review_count
             file = files[index]
             rating, _ = file.split('_')[1].split('.')
+
+            rand_user_index = randrange(0, len(user_ids))
+            user_id = user_ids[rand_user_index]
+            del user_ids[rand_user_index]
 
             with open('./reviews/'+file, 'r') as review_file:
                 review = {
@@ -147,7 +152,7 @@ def review_fixtures():
                         'created_at': current_date,
                         'updated_at': current_date,
                         'movie_id': movie_id,
-                        'user_id': review_count
+                        'user_id': user_id
                     }
                 }
 
