@@ -1,6 +1,7 @@
 import time
 import json
 import datetime
+import csv
 from os import listdir, path, mkdir
 from random import randrange, shuffle
 
@@ -29,7 +30,14 @@ genre_list = ['Action', 'Adventure', 'Drama', 'Action', 'Sports', 'Crime', 'Thri
 num_genre = len(genre_list)
 
 
-def genre_fixtures ():
+def read_movies():
+    print ('Reading movie data...')
+    with open('./movies.csv', newline='') as csv_file:
+        data = list(csv.DictReader(csv_file))
+        return data
+
+
+def genre_fixtures():
     print('Generating fixtures for genre...')
     current_date = str(datetime.datetime.fromtimestamp(time.time()))
     genres = []
@@ -54,18 +62,19 @@ def genre_fixtures ():
         json.dump(genres, genre_file)
 
 
-def movie_fixtures():
+def movie_fixtures(movies_list):
     print('Generating fixtures for movies...')
     movies = []
 
     for i in range(num_movies):
-        postfix = str(i)
+        movie_meta = movies_list[i]
+
         movie = {
             'model': 'movies.movies',
             'pk': i,
             'fields': {
-                'title': 'Movie Title Number ' + postfix,
-                'description': 'Random Movie Description Goes Here',
+                'title': movie_meta['original_title'],
+                'description': movie_meta['overview'],
                 'created_at': str(datetime.datetime.fromtimestamp(time.time())),
                 'updated_at': str(datetime.datetime.fromtimestamp(time.time())),
                 'release_date': datetime.datetime.fromtimestamp(time.time() - (i * 2160000)).strftime("%Y-%m-%d"),
@@ -154,5 +163,6 @@ def review_fixtures():
 
 user_fixtures()
 genre_fixtures()
-movie_fixtures()
+movies_list = read_movies()
+movie_fixtures(movies_list)
 review_fixtures()
