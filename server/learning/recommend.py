@@ -24,6 +24,8 @@ def recommend(people, person_index, bound, similarity):
  
     for r in recommendations:
         similarity, item = recommendations[r]
+        if similarity <= 0:
+            similarity = 0.0001
         recommendations[r] = sum(item) / similarity
 
     return recommendations
