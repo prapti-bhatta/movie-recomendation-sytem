@@ -3,6 +3,7 @@ import NavBar from '../../../components/NavBar'
 import PageTitle from '../../../components/PageTitle'
 import { getMovieInfo } from '../../../service/movies'
 import Reviews from '../../../components/Reviews'
+import './style.css'
 
 class SingleMovie extends Component {
   constructor () {
@@ -36,7 +37,9 @@ class SingleMovie extends Component {
           <div className='row mt-2'>
             <div className='col-md-8'>
               <div>
-                <img src={movie.preview} width='100%' />
+                <img src={movie.preview}
+                  className='MoviePreviewImage'
+                />
               </div>
               <Reviews movieId={this.state.movieId} />
             </div>

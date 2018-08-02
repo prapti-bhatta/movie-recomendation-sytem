@@ -6,7 +6,7 @@ export function fetchPopularMovies (page = 0, limit = 10) {
     .then(res => res.json())
     .then(({results}) => {
       results.forEach((movie) => {
-        movie.preview = preview
+        if (!movie.preview) movie.preview = preview
         movie.rating = (Math.random() * 6)
       })
       return results
@@ -17,7 +17,7 @@ export function getMovieInfo (id) {
   return fetch(`movies/${id}/`)
     .then(res => res.json())
     .then(movie => {
-      movie.preview = preview
+      if (!movie.preview) movie.preview = preview
       return movie
     })
 }
