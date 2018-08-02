@@ -22,6 +22,7 @@ urlpatterns = [
     path('api/users/', include('users.urls')),
     path('api/genre/', include('genre.urls')),
     path('api/movies/', include('movies.urls')),
+    path('api/recommendations/', include('recommendations.urls')),
     path('api/auth/', include('rest_framework.urls')),
     path('api/auth/token', obtain_auth_token),
     path('admin/', admin.site.urls),
