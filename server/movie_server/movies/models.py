@@ -10,6 +10,7 @@ class Movies(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    preview = models.CharField(max_length=3000, null=True)
 
     def __str__(self):
         return self.title
