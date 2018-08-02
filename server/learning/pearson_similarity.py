@@ -21,4 +21,4 @@ def similarity (person1, person2):
 
     denominator = math.sqrt((n * ss1 - math.pow(s1, 2)) * (n * ss2 - math.pow(s2, 2)))
 
-    return (numerator / denominator) if denominator != 0 else 0
+    return (numerator / denominator) if denominator != 0 else 0.0001
