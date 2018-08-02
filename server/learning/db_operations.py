@@ -33,4 +33,14 @@ def get_reviews (conn):
     cur.execute('select user_id, json_object_agg(movie_id, rating) from movies_moviereviews GROUP BY user_id')
     records = cur.fetchall()
     cur.close()
+
+    existing_users = [str(i[0]) for i in records]
+
+    # Fetch users who don't have any reviews
+    cur = conn.cursor()
+    cur.execute('select id, json_build_object() from auth_user where id not in ('+ ','.join(existing_users) +')')
+    users = cur.fetchall()
+    records.extend(users)
+    cur.close()
+
     return records
