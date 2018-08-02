@@ -1,11 +1,13 @@
 from rest_framework import viewsets
 from .models import Movies, MovieReviews
 from .serializers import MovieSerializer, MovieReviewSerializer
+from rest_framework.pagination import LimitOffsetPagination
 
 
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movies.objects.all()
     serializer_class = MovieSerializer
+    pagination_class = LimitOffsetPagination
 
     def get_queryset(self):
         queryset = Movies.objects.all()

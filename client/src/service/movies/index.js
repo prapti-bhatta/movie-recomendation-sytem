@@ -1,15 +1,15 @@
 import fetch, { authenticatedFetch } from '../fetch'
 import preview from './preview'
 
-export function fetchPopularMovies () {
-  return fetch('movies')
+export function fetchPopularMovies (page = 0, limit = 10) {
+  return fetch(`movies?offset=${page}&limit=${limit}`)
     .then(res => res.json())
-    .then((movies) => {
-      movies.forEach((movie) => {
+    .then(({results}) => {
+      results.forEach((movie) => {
         movie.preview = preview
         movie.rating = (Math.random() * 6)
       })
-      return movies
+      return results
     })
 }
 
@@ -22,15 +22,15 @@ export function getMovieInfo (id) {
     })
 }
 
-export function searchMovies (query = '') {
-  return fetch(`movies/?search=${query}`)
+export function searchMovies (query = '', page = 0, limit = 10) {
+  return fetch(`movies/?search=${query}&offset=${page}&limit=${limit}`)
     .then(res => res.json())
-    .then((movies) => {
-      movies.forEach((movie) => {
+    .then(({results}) => {
+      results.forEach((movie) => {
         movie.preview = preview
         movie.rating = (Math.random() * 6)
       })
-      return movies
+      return results
     })
 }
 
