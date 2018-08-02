@@ -31,7 +31,7 @@ num_genre = len(genre_list)
 
 def read_movies():
     print ('Reading movie data...')
-    with open('./movies.csv', newline='') as csv_file:
+    with open('./movies.csv', newline='', encoding="utf8") as csv_file:
         data = list(csv.DictReader(csv_file))
         return data
 
