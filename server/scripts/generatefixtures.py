@@ -78,7 +78,8 @@ def movie_fixtures(movies_list):
                 'created_at': str(datetime.datetime.fromtimestamp(time.time())),
                 'updated_at': str(datetime.datetime.fromtimestamp(time.time())),
                 'release_date': datetime.datetime.fromtimestamp(time.time() - (i * 2160000)).strftime("%Y-%m-%d"),
-                'genre_id': randrange(0, num_genre)
+                'genre_id': randrange(0, num_genre),
+                'preview': 'https://image.tmdb.org/t/p/w780' + movie_meta['poster_path']
             }
         }
         movies.append(movie)
