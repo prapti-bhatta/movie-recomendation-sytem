@@ -15,12 +15,10 @@ class MovieListItem extends Component {
     const style = (this.props.onClick) ? { cursor: 'pointer' } : {}
     const movie = this.props.movie
     return (
-      <div className='VMovieListItem' style={style} onClick={this.handleClick}>
-        <div>
-          <img className='VMovieListItem-thumbnail' src={movie.preview} />
-        </div>
-        <div className='mt-2'>
-          <h6>{movie.title}</h6>
+      <div className='card VMovieListItem' style={style} onClick={this.handleClick}>
+        <img class='card-img-top' src={movie.preview} alt='Card image' />
+        <div class='card-body'>
+          <small className='VMovieListItem-title'>{movie.title}</small>
         </div>
       </div>
     )

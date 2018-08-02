@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import NavBar from '../../../components/NavBar'
 import PageTitle from '../../../components/PageTitle'
-import { getMovieInfo } from '../../../service/movies'
+import { getMovieInfo, othersAlsoLikeMovies } from '../../../service/movies'
 import Reviews from '../../../components/Reviews'
+import VerticalMovieList from '../../../components/VerticalMovieList'
+import { getSingleMovieUrl } from '../../../service/urls'
 import './style.css'
 
 class SingleMovie extends Component {
@@ -18,7 +20,16 @@ class SingleMovie extends Component {
       },
       reviews: [],
       loading: false,
-      loadingReviews: false
+      loadingReviews: false,
+      othersAlsoLiked: []
+    }
+
+    this.gotoMovie = this.gotoMovie.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.match.params.id !== nextProps.match.params.id) {
+      this.setState({ movieId: nextProps.match.params.id }, this.componentDidMount)
     }
   }
 
@@ -27,6 +38,26 @@ class SingleMovie extends Component {
     getMovieInfo(this.state.movieId)
       .then(movie => this.setState({ movie, loading: false }))
       .catch(e => this.setState({ loading: false }))
+
+    othersAlsoLikeMovies(this.state.movieId, 0, 5)
+      .then(movies => this.setState({ othersAlsoLiked: movies }))
+  }
+
+  renderOthersAlsoLiked () {
+    return (
+      <div>
+        <hr />
+        <h5 className='text-center'> People Also Liked </h5>
+        <VerticalMovieList
+          movies={this.state.othersAlsoLiked}
+          onMovieClick={this.gotoMovie}
+        />
+      </div>
+    )
+  }
+
+  gotoMovie (movie) {
+    this.props.history.push(getSingleMovieUrl(movie.id))
   }
 
   renderMovieData (movie) {
@@ -51,6 +82,8 @@ class SingleMovie extends Component {
                 <small><strong>Genre:</strong> {movie.genre_name}</small>
               </div>
               <p className='mt-2'>{movie.description}</p>
+
+              {this.renderOthersAlsoLiked()}
             </div>
           </div>
         </div>
@@ -71,6 +104,7 @@ class SingleMovie extends Component {
 
   render () {
     const { movie, loading } = this.state
+    if (loading) return <div> Loading... </div>
     return (
       <div>
         <NavBar />

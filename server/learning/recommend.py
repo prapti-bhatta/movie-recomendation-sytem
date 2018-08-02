@@ -21,7 +21,7 @@ def recommend(people, person_index, bound, similarity):
                     recommendations[item] = (s + similarity, weights + [weight])
                 else:
                     recommendations[item] = (similarity, [weight])
-
+ 
     for r in recommendations:
         similarity, item = recommendations[r]
         recommendations[r] = sum(item) / similarity

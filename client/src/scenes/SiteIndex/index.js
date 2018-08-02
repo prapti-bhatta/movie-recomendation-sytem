@@ -13,7 +13,8 @@ class SiteIndex extends Component {
     this.state = {
       movies: [],
       recommendedMovies: [],
-      loggedIn: isLoggedIn()
+      loggedIn: isLoggedIn(),
+      query: ''
     }
     this.handleSearch = this.handleSearch.bind(this)
     this.gotoMovie = this.gotoMovie.bind(this)
@@ -34,11 +35,12 @@ class SiteIndex extends Component {
   }
 
   handleSearch (query) {
+    this.setState({ query })
     if (!query) {
-      fetchNewestMovies()
+      fetchNewestMovies(0, 6)
         .then((movies) => this.setState({ movies }))
     } else {
-      searchMovies(query)
+      searchMovies(query, 0, 65535)
         .then((movies) => this.setState({ movies }))
     }
   }
@@ -52,13 +54,15 @@ class SiteIndex extends Component {
           <SearchBar searchHandler={this.handleSearch} />
           <div className='row mt-5'>
             <div className='col-md-12'>
-              <h3 className='text-left mb-3'>Newest Additions</h3>
+              <h3 className='text-left mb-3'>
+                {this.state.query ? 'Search Results' : 'Newest Additions'}
+              </h3>
               <CardMovieList
                 movies={this.state.movies}
                 onMovieClick={this.gotoMovie}
               />
             </div>
-            {loggedIn && <div className='col-md-12'>
+            {loggedIn && <div className='col-md-12 mt-3'>
               <h3 className='text-left mb-3'>Recommended For You</h3>
               <CardMovieList
                 movies={this.state.recommendedMovies}

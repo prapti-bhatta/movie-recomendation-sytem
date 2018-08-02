@@ -77,3 +77,9 @@ export function recommendedMovies (page = 0, limit = 10) {
     .then(res => res.json())
     .then(recs => recs.results.map(rec => ({...rec.movie})))
 }
+
+export function othersAlsoLikeMovies (movieId, page = 0, limit = 10) {
+  return authenticatedFetch(`recommendations/others-liked?movie=${movieId}&offset=${page}&limit=${limit}`)
+    .then(res => res.json())
+    .then(recs => recs.results.map(rec => ({...rec.movie})))
+}

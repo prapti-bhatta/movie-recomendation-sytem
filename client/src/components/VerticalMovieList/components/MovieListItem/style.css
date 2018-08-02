@@ -1,6 +1,7 @@
 .VMovieListItem {
-    margin: 30px 0;
     text-align: center;
+    width: 200px;
+    margin: 30px auto;
 }
 
 .VMovieListItem-thumbnail {
