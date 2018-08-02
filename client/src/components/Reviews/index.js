@@ -20,13 +20,18 @@ class Reviews extends Component {
   }
 
   componentDidMount () {
-    if (!this.state.loggedIn) return
     this.setState({ loading: true })
-    getMovieReviewByUser(this.state.movieId, this.state.user.id)
-      .then((userReview) => this.setState({ userReview }))
-      .then(() => getMovieReviews(this.state.movieId))
-      .then(reviews => this.setState({ reviews, loading: false }))
-      .catch(e => this.setState({ loading: false }))
+    if (!this.state.loggedIn) {
+      getMovieReviews(this.state.movieId)
+        .then(reviews => this.setState({ reviews, loading: false }))
+        .catch(e => this.setState({ loading: false }))
+    } else {
+      getMovieReviewByUser(this.state.movieId, this.state.user.id)
+        .then((userReview) => this.setState({ userReview }))
+        .then(() => getMovieReviews(this.state.movieId))
+        .then(reviews => this.setState({ reviews, loading: false }))
+        .catch(e => this.setState({ loading: false }))
+    }
   }
 
   handlePostReview (comment, rating) {
@@ -39,7 +44,7 @@ class Reviews extends Component {
     if (loading) return <div> Loading... </div>
     return (
       <div>
-        {!userReview && <div className='mt-3'>
+        {(this.state.loggedIn && !userReview) && <div className='mt-3'>
           <AddReview onPostReview={this.handlePostReview} />
         </div>}
         {userReview &&
