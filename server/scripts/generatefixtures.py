@@ -24,7 +24,7 @@ shuffle(files)
 
 # Decide how many movies and users to create
 num_movies = int(num_reviews / reviews_per_movie)
-num_users = int(num_reviews / reviews_per_user)
+num_users = reviews_per_movie
 
 genre_list = ['Action', 'Adventure', 'Drama', 'Action', 'Sports', 'Crime', 'Thriller', 'Sci-fi', 'History', 'Documentary']
 num_genre = len(genre_list)
