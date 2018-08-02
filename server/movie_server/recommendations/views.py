@@ -12,4 +12,5 @@ class BySimilarUsersViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         queryset = BySimilarUsers.objects.all()
         queryset = queryset.filter(user=self.request.user)
+        queryset = queryset.extra(order_by=['-rating'])
         return queryset

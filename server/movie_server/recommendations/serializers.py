@@ -8,4 +8,4 @@ class BySimilarUsersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BySimilarUsers
-        fields = ('id', 'user', 'movie')
+        fields = ('id', 'user', 'rating', 'movie')
