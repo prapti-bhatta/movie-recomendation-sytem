@@ -18,6 +18,7 @@ class MovieListItem extends Component {
       <div className='card CardMovieListItem' style={style} onClick={this.handleClick}>
         <img class='card-img-top' src={movie.preview} alt='Card image' />
         <div class='card-body'>
+          {movie.rating && <small className='CardMovieListItem-rating'> {movie.rating.toFixed(1)} Stars </small>}
           <small className='CardMovieListItem-title'>{movie.title}</small>
         </div>
       </div>

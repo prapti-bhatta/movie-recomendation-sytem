@@ -81,6 +81,9 @@ class SingleMovie extends Component {
               <div>
                 <small><strong>Genre:</strong> {movie.genre_name}</small>
               </div>
+              <div>
+                <small><strong>Average Rating:</strong> {movie.rating.toFixed(1)}</small>
+              </div>
               <p className='mt-2'>{movie.description}</p>
 
               {this.renderOthersAlsoLiked()}

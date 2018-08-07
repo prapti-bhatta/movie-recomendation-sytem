@@ -4,6 +4,16 @@ from genre.models import Genre
 from users.serializers import UserSerializer
 
 
+class MovieSerializerWithRating(serializers.ModelSerializer):
+    genre_name = serializers.StringRelatedField(source='genre', read_only=True)
+    genre = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all())
+    rating = serializers.FloatField()
+
+    class Meta:
+        model = Movies
+        fields = ('id', 'title', 'description', 'rating', 'preview', 'release_date', 'genre', 'genre_name', 'created_at', 'updated_at')
+
+
 class MovieSerializer(serializers.ModelSerializer):
     genre_name = serializers.StringRelatedField(source='genre', read_only=True)
     genre = serializers.PrimaryKeyRelatedField(queryset=Genre.objects.all())

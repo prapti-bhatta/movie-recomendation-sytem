@@ -1,16 +1,17 @@
 from rest_framework import viewsets
 from .models import Movies, MovieReviews
-from .serializers import MovieSerializer, MovieReviewSerializer
+from .serializers import MovieSerializerWithRating, MovieReviewSerializer
 from rest_framework.pagination import LimitOffsetPagination
+from django.db.models import Avg
 
 
 class MovieViewSet(viewsets.ModelViewSet):
-    queryset = Movies.objects.all()
-    serializer_class = MovieSerializer
+    queryset = Movies.objects.annotate(rating=Avg('moviereviews__rating'))
+    serializer_class = MovieSerializerWithRating
     pagination_class = LimitOffsetPagination
 
     def get_queryset(self):
-        queryset = Movies.objects.all()
+        queryset = Movies.objects.annotate(rating=Avg('moviereviews__rating'))
         search = self.request.query_params.get('search', None)
         if search is not None:
             queryset = queryset.filter(title__icontains=search)

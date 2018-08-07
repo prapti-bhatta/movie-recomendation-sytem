@@ -5,6 +5,7 @@ from .serializers import BySimilarUsersSerializer
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.exceptions import ValidationError
 
+
 class BySimilarUsersViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BySimilarUsers.objects.all()
     serializer_class = BySimilarUsersSerializer
