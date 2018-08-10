@@ -7,7 +7,6 @@ export function fetchNewestMovies (page = 0, limit = 10) {
     .then(({results}) => {
       results.forEach((movie) => {
         if (!movie.preview) movie.preview = preview
-        movie.rating = (Math.random() * 6)
       })
       return results
     })
@@ -28,7 +27,6 @@ export function searchMovies (query = '', page = 0, limit = 10) {
     .then(({results}) => {
       results.forEach((movie) => {
         if (!movie.preview) movie.preview = preview
-        movie.rating = (Math.random() * 6)
       })
       return results
     })
