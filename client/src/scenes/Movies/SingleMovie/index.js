@@ -46,7 +46,6 @@ class SingleMovie extends Component {
   renderOthersAlsoLiked () {
     return (
       <div>
-        <hr />
         <h5 className='text-center'> People Also Liked </h5>
         <VerticalMovieList
           movies={this.state.othersAlsoLiked}
@@ -72,20 +71,21 @@ class SingleMovie extends Component {
                   className='MoviePreviewImage'
                 />
               </div>
+              <div className='mt-4 mb-4'>
+                <div>
+                  <small><strong>Released on:</strong> {movie.release_date}</small>
+                </div>
+                <div>
+                  <small><strong>Genre:</strong> {movie.genre_name}</small>
+                </div>
+                <div>
+                  <small><strong>Average Rating:</strong> {movie.rating.toFixed(1)}</small>
+                </div>
+                <p className='mt-2'>{movie.description}</p>
+              </div>
               <Reviews movieId={this.state.movieId} />
             </div>
             <div className='col-md-4'>
-              <div>
-                <small><strong>Released on:</strong> {movie.release_date}</small>
-              </div>
-              <div>
-                <small><strong>Genre:</strong> {movie.genre_name}</small>
-              </div>
-              <div>
-                <small><strong>Average Rating:</strong> {movie.rating.toFixed(1)}</small>
-              </div>
-              <p className='mt-2'>{movie.description}</p>
-
               {this.renderOthersAlsoLiked()}
             </div>
           </div>
