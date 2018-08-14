@@ -27,7 +27,7 @@ class ByOthersAlsoLikedViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = BySimilarUsers.objects.all()
         movie = self.request.query_params.get('movie', None)
         if movie is not None:
-            subquery = BySimilarUsers.objects.values('user').filter(movie=movie, rating__gte=6)
+            subquery = BySimilarUsers.objects.values('user').distinct('movie').filter(movie=movie, rating__gte=6)
             queryset = queryset.filter(user__in=Subquery(subquery)).exclude(movie=movie)
         else:
             raise ValidationError()
