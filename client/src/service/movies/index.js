@@ -73,11 +73,11 @@ export function postMovieReview (movieId, comment, rating) {
 export function recommendedMovies (page = 0, limit = 10) {
   return authenticatedFetch(`recommendations/similar-users?offset=${page}&limit=${limit}`)
     .then(res => res.json())
-    .then(recs => recs.results.map(rec => ({...rec.movie})))
+    .then(recs => recs.results.map(rec => ({preview, ...rec.movie})))
 }
 
 export function othersAlsoLikeMovies (movieId, page = 0, limit = 10) {
   return fetch(`recommendations/others-liked?movie=${movieId}&offset=${page}&limit=${limit}`)
     .then(res => res.json())
-    .then(recs => recs.results.map(rec => ({...rec.movie})))
+    .then(recs => recs.results.map(rec => ({preview, ...rec.movie})))
 }
